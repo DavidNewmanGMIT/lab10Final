@@ -7,7 +7,7 @@ export class Header extends React.Component {
 
     render(){
         return (
-            <div className="App"> 
+            <div> 
                 <h1>My Header in Another Component</h1>
                 <h3>This is the Header Component</h3>
             </div>

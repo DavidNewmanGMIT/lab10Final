@@ -9,6 +9,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Navbar,Nav} from 'react-bootstrap';
 //5.b imported to change between pages using React Router
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+//Auto Import
+import { Read } from './Components/read';
+import { Create } from './Components/create';
+import { Movies } from './Components/movies';
 
 //comment
 
@@ -36,11 +40,12 @@ class App extends React.Component {
         {/* 5.b routing using react */}
         <Switch>
           <Route path='/' component={Content} exact/>
-          <Route path='/create' component={Header} exact/>
-          <Route path='/read' component={Footer} exact/>
+          <Route path='/create' component={Create} exact/>
+          <Route path='/read' component={Read} exact/>
         </Switch>
 
 
+       
         {/* <Header></Header> */}
         {/* shift + alt + f to tiddy up code  */}
         {/* 3.a Displays text hello world! in a h1 heading */}

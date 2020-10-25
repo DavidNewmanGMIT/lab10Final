@@ -7,7 +7,7 @@ export class Footer extends React.Component {
 
     render(){
         return (
-            <div className="App"> 
+            <div> 
                 <h1>My Footer in Another Component</h1>
                 <h3>This is Footer Component</h3>
             </div>
