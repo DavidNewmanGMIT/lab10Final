@@ -1,33 +1,31 @@
 import React from 'react';
 import { Movies } from './movies';
+import axios from 'axios';
 
 export class Read extends React.Component{
     //this is data to be used by the class
     state = {
-        movies:[
-                {
-                    "Title": "Avengers: Infinity War",
-                    "Year": "2018",
-                    "imdbID": "tt4154756",
-                    "Type": "movie",
-                    "Poster": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_SX300.jpg"
-                },
-                {
-                    "Title": "Captain America: Civil War",
-                    "Year": "2016",
-                    "imdbID": "tt3498820",
-                    "Type": "movie",
-                    "Poster": "https://m.media-amazon.com/images/M/MV5BMjQ0MTgyNjAxMV5BMl5BanBnXkFtZTgwNjUzMDkyODE@._V1_SX300.jpg"
-                },
-                {
-                    "Title": "Charlie Wilson's War",
-                    "Year": "2007",
-                    "imdbID": "tt0472062",
-                    "Type": "movie",
-                    "Poster": "https://m.media-amazon.com/images/M/MV5BMTgwMDgwMDc4MF5BMl5BanBnXkFtZTYwOTU3MDM4._V1_SX300.jpg"
-                }
-        ]
-       };
+        //Movies is now = to an empty array
+        movies:[        ]
+    };
+
+    //Lifestylehook using axios
+    componentDidMount(){
+        axios.get('https://jsonblob.com/api/jsonblob/520c3b5e-0312-11eb-a6af-cbf00d776032')
+        //for fulfilled state
+        .then(
+            //arrow function ()=>{} looks like rocket ship
+            (response)=>{
+                //Json response.data
+                this.setState({ movies: response.data.Search})
+            }
+        )
+        //for rejected state, error that comes back.
+        .catch(
+            (error)=>{
+            console.loge(error)}
+        );
+    }
 
     render(){
         return (
