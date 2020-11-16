@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 export class Create extends React.Component {
 
@@ -21,13 +22,13 @@ export class Create extends React.Component {
         }
     }
 
-    onChangePoster(e){
+    onChangePoster(e) {
         this.setState({
             Poster: e.target.value
         });
     }
 
-    onChangeYear(e){
+    onChangeYear(e) {
         this.setState({
             Year: e.target.value
         });
@@ -48,6 +49,20 @@ export class Create extends React.Component {
         //Alret to display movie is entered correctly
         //dont have to write culrys here cause outside jsx code
         alert("Movie: " + this.state.Title + " Year: " + this.state.Year + " Poster: " + this.state.Poster);
+
+        //Object
+        const newMovie = {
+            title: this.state.Title,
+            year: this.state.Year,
+            poster: this.state.Poster
+        }
+        axios.post('http://localhost:4000/api/movies', newMovie)
+        .then((res)=>{
+            console.log(res);
+        })
+        .catch((err)=>{
+            console.log(err);
+        });
     }
     render() {
         return (
@@ -64,22 +79,22 @@ export class Create extends React.Component {
                     </div>
 
                     <div className='form-group'>
-                    <label>Add Movie Year</label>
-                    <input type='text'
+                        <label>Add Movie Year</label>
+                        <input type='text'
                             //styling
                             className='form-control'
                             value={this.state.Year}
                             onChange={this.onChangeYear}>
-                    </input>
+                        </input>
                     </div>
 
                     <div className='form-group'>
-                    <label>Add Movie Poster</label>
-                    <textarea type='text'
-                    className='form-control'
-                    value={this.state.Poster}
-                    onChange={this.onChangePoster}>
-                    </textarea>
+                        <label>Add Movie Poster</label>
+                        <textarea type='text'
+                            className='form-control'
+                            value={this.state.Poster}
+                            onChange={this.onChangePoster}>
+                        </textarea>
                     </div>
 
                     <div className="form-group">
