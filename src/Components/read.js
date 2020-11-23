@@ -18,7 +18,7 @@ export class Read extends React.Component {
                 //arrow function ()=>{} looks like rocket ship
                 (response) => {
                     //Json response.data
-                    this.setState({ movies: response.data.movies })
+                    this.setState({ movies: response.data})
                 }
             )
             //for rejected state, error that comes back.

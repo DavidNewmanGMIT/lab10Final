@@ -6,6 +6,8 @@ const port = 4000
 const cors = require('cors');
 const bodyParser = require("body-parser");
 
+//include Mongoose
+const mongoose = require('mongoose');
 
 //use cors package
 app.use(cors());
@@ -23,32 +25,67 @@ app.use(bodyParser.urlencoded({ extended: false }))
 //parse application/json
 app.use(bodyParser.json())
 
+const myConnectionString = 'mongodb+srv://admin:admin@cluster0.lfbfs.mongodb.net/movies?retryWrites=true&w=majority';
+//Mongoose connection
+mongoose.connect(myConnectionString, { useNewUrlParser: true });
+
+//mongoose schema
+const Schema = mongoose.Schema;
+
+//define schema, store title, year and poster
+var movieSchema = new Schema({
+    title: String,
+    year: String,
+    poster: String
+});
+
+//create modle, just need to refer to MovieModle
+var MovieModle = mongoose.model("movie", movieSchema);
+
 //add new root point
 app.get('/api/movies', (req, res) => {
 
-    const myMovies = [
-        {
-            "Title": "Avengers: Infinity War",
-            "Year": "2018",
-            "imdbID": "tt4154756",
-            "Type": "movie",
-            "Poster": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_SX300.jpg"
-        },
-        {
-            "Title": "Captain America: Civil War",
-            "Year": "2016",
-            "imdbID": "tt3498820",
-            "Type": "movie",
-            "Poster": "https://m.media-amazon.com/images/M/MV5BMjQ0MTgyNjAxMV5BMl5BanBnXkFtZTgwNjUzMDkyODE@._V1_SX300.jpg"
-        }
-    ];
+    // const myMovies = [
+    //     {
+    //         "Title": "Avengers: Infinity War",
+    //         "Year": "2018",
+    //         "imdbID": "tt4154756",
+    //         "Type": "movie",
+    //         "Poster": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_SX300.jpg"
+    //     },
+    //     {
+    //         "Title": "Captain America: Civil War",
+    //         "Year": "2016",
+    //         "imdbID": "tt3498820",
+    //         "Type": "movie",
+    //         "Poster": "https://m.media-amazon.com/images/M/MV5BMjQ0MTgyNjAxMV5BMl5BanBnXkFtZTgwNjUzMDkyODE@._V1_SX300.jpg"
+    //     }
+    // ];
+
+    //find doucments in databases
+    MovieModle.find((err, data) => {
+        res.json(data);
+
+    })
+
     //pass down to server
-    res.status(200).json({
-        //can add more data
-        message: "Okay is everything?",
-        movies: myMovies
-    });
+    // res.status(200).json({
+    //     //can add more data
+    //     message: "Okay is everything?",
+    //     movies: myMovies
+    // });
 })
+
+//log name id in database
+app.get('/api/movies/:id', (req,res) => {
+    console.log(req.params.ie);
+
+    //find Id from database using model
+    MovieModle.findById(req.params.id,(err,data) => {
+        res.json(data);
+    })
+})
+
 
 //listening for post requests
 app.post('/api/movies', (req, res) => {
@@ -57,6 +94,16 @@ app.post('/api/movies', (req, res) => {
     console.log(req.body.title);
     console.log(req.body.year);
     console.log(req.body.poster);
+
+    //interact
+    MovieModle.create({
+        title: req.body.title,
+        year: req.body.year,
+        poster: req.body.poster
+    });
+
+    //to stop client from sending data twice
+    res.send('item added');
 })
 
 app.listen(port, () => {
