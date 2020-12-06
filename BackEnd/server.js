@@ -86,6 +86,18 @@ app.get('/api/movies/:id', (req,res) => {
     })
 })
 
+app.put('/api/movies/:id', (req, res) => {
+    console.log("Update Movie" +req.params.ie);
+    //incase need to debug later, same we did with post
+    console.log(req.body);
+
+    //find Id from database using model, find record by id and update
+    MovieModle.findByIdAndUpdate(req.params.id,req.body, {new:true},
+        (err, data)=>{
+            res.send(data);
+        })
+})
+
 //listen for a http delete method
 app.delete('/api/movies/:id', (req, res) => {
     console.log("Delete Movie: " + req.params.id);

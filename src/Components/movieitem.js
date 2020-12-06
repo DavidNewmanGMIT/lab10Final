@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
+import {Link, link} from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
@@ -40,6 +41,8 @@ export class MovieItem extends React.Component{
                         {/* delete button */}
                         <Button variant="danger" onClick={this.DeleteMovie}>Delete</Button>
                     </Card.Body>
+                    {/* to link and load edit document */}
+                    <Link to={"/edit/"+ this.props.movie._id} className="btn btn-primary">Edit</Link>
                 </Card>
             </div>
         );

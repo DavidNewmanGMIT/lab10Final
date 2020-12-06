@@ -13,6 +13,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import { Read } from './Components/read';
 import { Create } from './Components/create';
 import { Movies } from './Components/movies';
+import { Edit } from './Components/edit';
 
 //comment
 
@@ -40,8 +41,9 @@ class App extends React.Component {
         {/* 5.b routing using react */}
         <Switch>
           <Route path='/' component={Content} exact/>
-          <Route path='/create' component={Create} exact/>
-          <Route path='/read' component={Read} exact/>
+          <Route path='/create' component={Create} />
+          <Route path='/read' component={Read} />
+          <Route path='/edit/:id' component={Edit}></Route>
         </Switch>
 
 
