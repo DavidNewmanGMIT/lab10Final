@@ -5,6 +5,7 @@ const port = 4000
 //include cors libary
 const cors = require('cors');
 const bodyParser = require("body-parser");
+const path = require('path');
 
 //include Mongoose
 const mongoose = require('mongoose');
@@ -18,6 +19,10 @@ app.use(function (req, res, next) {
         "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+
+//configuration telling it where to find build and static folder
+app.use(express.static(path.join(__dirname, '../build')));
+app.use('../static', express.static(path.join(__dirname, 'build//static')));
 
 // arse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -105,6 +110,10 @@ app.delete('/api/movies/:id', (req, res) => {
     MovieModle.findByIdAndDelete(req.params.id,(err , data) => {
         res.send(data); //send back data when updated
     })
+})
+
+app.get('*', (req,res)=>{
+    res.sendFile(path.join(__dirname+ '/../build/index.html'));
 })
 
 //listening for post requests
